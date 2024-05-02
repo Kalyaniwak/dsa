@@ -1,0 +1,95 @@
+#include<iostream>
+using namespace std;
+
+class hashtable {
+public:
+    int key;
+    long int tel_no;
+};
+
+class Hashing {
+public:
+    hashtable t[10];
+    int i;
+    
+    Hashing() {
+        for (i = 0; i < 10; i++) {
+            t[i].key = i;
+            t[i].tel_no = -1;
+        }
+    }
+
+    void display() {
+        cout << "Key\t\tTelephone Number\n";
+        for (int i = 0; i < 10; i++)
+            cout << t[i].key << "\t\t" << t[i].tel_no << "\n";
+    }
+
+    void insert() {
+        int temp;
+        int j, k;
+        int ch;
+        cout << "Enter the telephone number: ";
+        cin >> t[i].tel_no;
+        temp = t[i].tel_no % 10;
+        if (t[temp].tel_no == -1) {
+            t[temp].tel_no = t[i].tel_no;
+        } else {
+            do {
+                cout << "Collision occurred, select probing method:\n";
+                cout << "1. Linear Probing\n";
+                cout << "2. Quadratic Probing\n";
+                cout << "Enter your choice: ";
+                cin >> ch;
+                switch (ch) {
+                    case 1:
+                        cout << "Entering number by linear probing\n";
+                        for (j = (temp + 1) % 10; ; j = (j + 1) % 10) { // Linear Probing
+                            if (t[j].tel_no == -1) {
+                                t[j].tel_no = t[i].tel_no;
+                                return;
+                            }
+                        }
+                        break;
+                    case 2:
+                        cout << "Entering number by quadratic probing\n";
+                        for (k = (temp + k * k) % 10; ; k = (k * k + 1) % 10) { // Quadratic Probing
+                            if (t[k].tel_no == -1) {
+                                t[k].tel_no = t[i].tel_no;
+                                return;
+                            }
+                        }
+                        break;
+                }
+                cout << "Hash table is full. Unable to insert.\n";
+            } while (ch != 0);
+        }
+    }
+};
+
+int main() {
+    Hashing h;
+    int choice;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Insert Telephone Number\n";
+        cout << "2. Display Hash Table\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                h.insert();
+                break;
+            case 2:
+                h.display();
+                break;
+            case 0:
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 0);
+    return 0;
+}
